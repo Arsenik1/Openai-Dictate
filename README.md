@@ -1,16 +1,40 @@
-# OpenAI Dictate App
+# OpenAI Dictate
 
-This project packages the same core dictation flow as `openai-dictation` into a single native macOS app without modifying the original project.
+`OpenAI Dictate` is a small native macOS menu bar app for voice dictation.
+It records your voice, sends it to OpenAI for transcription, copies the result to the clipboard, and can paste it into the app you were using.
 
-## Features
+## What It Is For
 
-- Global hotkey: `Ctrl + Option + Cmd + V`
-- Starts recording on the first press
-- Stops recording on the second press
-- Sends the recording to the OpenAI `audio/transcriptions` endpoint
-- Writes the returned transcript to the clipboard
-- Automatically pastes into the active app when permissions allow it
-- Plays system sounds for start, stop, and clipboard events
+- Dictating into chats, notes, documents, and text fields
+- Turning short voice recordings into text quickly
+- Using one global shortcut instead of switching between apps
+
+## Quick Start
+
+1. Build the app.
+
+```zsh
+./build-app.zsh
+```
+
+2. Open the app.
+
+```zsh
+open -n -g "./build/OpenAI Dictate.app"
+```
+
+3. Click the `OD` menu bar icon.
+4. Select `Set OpenAI API Key...` and save your key.
+5. Allow `Microphone` and `Accessibility` when macOS asks.
+6. Press `Ctrl + Option + Cmd + V` to start recording.
+7. Press the same shortcut again to stop and transcribe.
+
+## How It Works
+
+1. First hotkey press starts recording.
+2. Second hotkey press stops recording.
+3. The transcript is copied to the clipboard.
+4. If Accessibility permission is available, the transcript is also pasted into the active app.
 
 ## Requirements
 
@@ -21,23 +45,23 @@ This project packages the same core dictation flow as `openai-dictation` into a 
 
 ## Permissions
 
-On first use, or when needed, the app will request or guide you to grant:
+The app needs these permissions:
 
-- `Microphone`
-- `Accessibility`
+- `Microphone` to record audio
+- `Accessibility` to auto-paste into the active app
 
 ## API Key
 
-You can save the API key from the menu bar app using `Set OpenAI API Key...`.
+The easiest setup is to save the key from the menu bar app with `Set OpenAI API Key...`.
 
-The app can also read from these sources:
+The app can also read from:
 
 - `OPENAI_API_KEY`
 - `WHISPER_API_KEY`
 - Keychain service `openai-api-key`
 - Keychain service `whisper-api-key`
 
-The app's own Keychain service name is:
+Its own Keychain service name is:
 
 ```text
 openai-dictate-app-api-key
@@ -45,26 +69,14 @@ openai-dictate-app-api-key
 
 ## Defaults
 
-- model: `whisper-1`
-- language: auto detect
-- auto paste: enabled
-- keep audio files: disabled
-- sound feedback: enabled
-- start sound: `Glass`
-- stop sound: `Glass`
-- clipboard sound: `Blow`
-
-## Build App
-
-```zsh
-./build-app.zsh
-```
-
-## Run App
-
-```zsh
-open -n -g "./build/OpenAI Dictate.app"
-```
+- Model: `whisper-1`
+- Language: auto detect
+- Auto paste: enabled
+- Keep audio files: disabled
+- Sound feedback: enabled
+- Start sound: `Glass`
+- Stop sound: `Glass`
+- Clipboard sound: `Blow`
 
 ## Build DMG
 
@@ -99,6 +111,8 @@ The DMG contains:
 - `Open Accessibility Settings`
 
 ## Runtime Files
+
+Data folder:
 
 ```text
 ~/Library/Application Support/OpenAIDictateApp
