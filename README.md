@@ -1,72 +1,55 @@
 # OpenAI Dictate App
 
-`openai-dictation` projesine dokunmadan, aynı temel akışı tek native macOS app içinde toplar.
+This project packages the same core dictation flow as `openai-dictation` into a single native macOS app without modifying the original project.
 
-## Ne Yapar
+## Features
 
 - Global hotkey: `Ctrl + Option + Cmd + V`
-- İlk basışta kayıt başlatır
-- İkinci basışta kaydı durdurur
-- Kaydı OpenAI `audio/transcriptions` endpoint'ine gönderir
-- Dönen transkripti clipboard'a yazar
-- İzin varsa aktif uygulamaya otomatik yapıştırır
-- Start / stop / clipboard için sistem sesleri çalar
+- Starts recording on the first press
+- Stops recording on the second press
+- Sends the recording to the OpenAI `audio/transcriptions` endpoint
+- Writes the returned transcript to the clipboard
+- Automatically pastes into the active app when permissions allow it
+- Plays system sounds for start, stop, and clipboard events
 
-## Tek App Olarak Neler Değişti
-
-Bu projede dış shell zinciri kaldırıldı. Aşağıdaki işler native Swift ile yapılır:
-
-- hotkey yakalama
-- mikrofon kaydı
-- state yönetimi
-- OpenAI API çağrısı
-- JSON response parse
-- Keychain API key okuma / yazma
-- clipboard write
-- auto-paste
-- sistem sesleri
-- menubar ayarları
-
-Bu nedenle `openai-dictation` klasöründeki `bash`, `curl`, `jq`, `ffmpeg` akışı bu yeni projede kullanılmaz.
-
-## Gereksinimler
+## Requirements
 
 - Apple Silicon (`arm64`)
 - macOS 26+
 - OpenAI API key
-- internet erişimi
+- Internet access
 
-## İzinler
+## Permissions
 
-App ilk kullanımda veya ihtiyaç anında şunları ister / yönlendirir:
+On first use, or when needed, the app will request or guide you to grant:
 
 - `Microphone`
 - `Accessibility`
 
 ## API Key
 
-App menubar içinden `Set OpenAI API Key...` ile key'i Keychain'e kaydeder.
+You can save the API key from the menu bar app using `Set OpenAI API Key...`.
 
-Ayrıca şu kaynakları da okuyabilir:
+The app can also read from these sources:
 
 - `OPENAI_API_KEY`
 - `WHISPER_API_KEY`
 - Keychain service `openai-api-key`
 - Keychain service `whisper-api-key`
 
-App'in kendi kayıt service adı:
+The app's own Keychain service name is:
 
 ```text
 openai-dictate-app-api-key
 ```
 
-## Varsayılanlar
+## Defaults
 
 - model: `whisper-1`
 - language: auto detect
-- auto paste: açık
-- keep audio files: kapalı
-- sound feedback: açık
+- auto paste: enabled
+- keep audio files: disabled
+- sound feedback: enabled
 - start sound: `Glass`
 - stop sound: `Glass`
 - clipboard sound: `Blow`
@@ -89,19 +72,19 @@ open -n -g "./build/OpenAI Dictate.app"
 ./build-dmg.zsh
 ```
 
-Çıktı:
+Output:
 
 ```text
 ./build/OpenAI Dictate.dmg
 ```
 
-DMG içinde şunlar olur:
+The DMG contains:
 
 - `OpenAI Dictate.app`
-- `Applications` kısayolu
+- `Applications` shortcut
 - `How to Open.txt`
 
-## Menubar Actions
+## Menu Bar Actions
 
 - `Toggle Dictation`
 - `Set OpenAI API Key...`
@@ -121,7 +104,7 @@ DMG içinde şunlar olur:
 ~/Library/Application Support/OpenAIDictateApp
 ```
 
-Log dosyası:
+Log file:
 
 ```text
 ~/Library/Application Support/OpenAIDictateApp/openai-dictate.log
