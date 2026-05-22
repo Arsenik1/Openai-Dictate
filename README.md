@@ -3,6 +3,8 @@
 `OpenAI Dictate` is a small native macOS menu bar app for voice dictation.
 It records your voice, sends it to OpenAI for transcription, copies the result to the clipboard, and can paste it into the app you were using.
 
+![OpenAI Dictate demo](./demo.gif)
+
 ## What It Is For
 
 - Dictating into chats, notes, documents, and text fields
